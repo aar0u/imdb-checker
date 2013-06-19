@@ -1,0 +1,8 @@
+<root>
+	<output path="out/background.js">
+		<input path="src/background.js"/>
+	</output>
+	<output path="out/main.js">
+		<input path="src/main.js"/>
+	</output>
+</root>
