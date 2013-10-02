@@ -10,7 +10,7 @@
 			titleAry[index] = title;
 			textAry[index] = $(this).text($(this).text() + " (IMDb - ...)");
 		});
-	} else if (domain.indexOf("filmgarde.com") !== -1) {
+	} else if (domain.indexOf("fgcineplex.com") !== -1) {
 		$(".section_header_orange").each(function(index) {
 			var title = $("a", this).text();
 			title = title.replace(/\(Digital\)/, "").replace(/\[.+?]/, "").trim();
