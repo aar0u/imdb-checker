@@ -1,11 +1,10 @@
 {
     "name":"IMDb Checker SG",
-    "version":"1.0.0.5",
+    "version":"1.0.1.1",
     "manifest_version":2,
     "description":"Show IMDb rating on Singapore cinema websites",
     "permissions":[
-        "http://www.imdb.com/",
-		"http://www.mrqe.com/"
+        "http://www.imdb.com/"
     ],
     "icons":{
         "128":"icon-128.png",
@@ -23,7 +22,7 @@
         {
             "js":["jquery-1.9.1.min.js", "main.js"],
             "matches":["http://www.shaw.sg/sw_movie*", "http://www.cathaycineplexes.com.sg/movie-listing*",
-                "http://www.filmgarde.com.sg/nowshowing*", "http://www.gv.com.sg/movies*"]
+                "http://fgcineplex.com.sg/nowshowing*", "http://www.gv.com.sg/movies*"]
         }
     ]
 }
