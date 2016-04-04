@@ -21,8 +21,8 @@
     "content_scripts":[
         {
             "js":["jquery-1.9.1.min.js", "main.js"],
-            "matches":["http://www.shaw.sg/sw_movie*", "http://www.cathaycineplexes.com.sg/movie-listing*",
-                "http://fgcineplex.com.sg/nowshowing*", "http://www.gv.com.sg/movies*"]
+            "matches":["http://www.shaw.sg/sw_movie*", "http://www.cathaycineplexes.com.sg/movies*",
+                "http://fgcineplex.com.sg/nowshowing*", "http://www.gv.com.sg/GVMovies"]
         }
     ]
 }

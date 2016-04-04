@@ -18,7 +18,7 @@
 			textAry[index] = $(this).text($(this).text() + " (IMDb - ...)");
 		});
 	} else if (domain.indexOf("cathaycineplexes.com") !== -1) {
-		$(".title").each(function(index) {
+		$("a[href^='movie-detail.aspx?id'] h3").each(function(index) {
 			var title = $(this).text();
 			title = title.replace(/\(Digital\)/, "").replace(/\[.+?]/, "").trim();
 			titleAry[index] = title;
@@ -27,15 +27,29 @@
 			textAry[index] = rating;
 		});
 	} else if (domain.indexOf("gv.com") !== -1) {
-		$("#tabContent1").unbind('DOMNodeInserted').bind('DOMNodeInserted', gvFunc);
-		$("#tabPanel1").find("a:first").bind("click", function() {
-			$("#tabContent1").unbind('DOMNodeInserted').bind('DOMNodeInserted', gvFunc);
-		})
+		// $(".tab-pane").unbind('DOMNodeInserted').bind('DOMNodeInserted', gvFunc);
+		// $("#tabPanel1").find("a:first").bind("click", function() {
+		// 	$("#tabContent1").unbind('DOMNodeInserted').bind('DOMNodeInserted', gvFunc);
+		// });
+
+		var observer = new MutationObserver(function(mutations) {
+		    $(".caption h5:not(:contains('{{'))").each(function(index) {
+		        var title = $(this).text();
+		        title = title.replace(/\(Digital\)/, "").replace(/\[.+?]/, "").replace(/\(.+?\)/, "").trim();
+		        titleAry[index] = title;
+		        var rating = $("<span> (IMDb - ...)</span>");
+		        $(this).after(rating);
+		        textAry[index] = rating;
+		    });
+		    port.postMessage(titleAry);
+		});
+		var target = document.querySelector('body');
+		observer.observe(target, { attributes: true, childList: true });
 	}
 
 	function gvFunc() {
-		$("#tabContent1").unbind('DOMNodeInserted');
-		$(".movie").each(function(index) {
+		$(".tab-pane").unbind('DOMNodeInserted');
+		$(".caption h5:not(:contains('{{'))").each(function(index) {
 			var title = $(this).text();
 			title = title.replace(/\(Digital\)/, "").replace(/\[.+?]/, "").replace(/\(.+?\)/, "").trim();
 			titleAry[index] = title;
