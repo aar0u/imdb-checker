@@ -12,7 +12,7 @@
 			if (that.readyState < 4) that.abort();
 		}, timeout);
 		that.send();
-	}
+	};
 
 	function process(type) {
 		this.type = type;
@@ -44,7 +44,7 @@
 				req.onload = function() {
 					if (that.port.connected) that.processMsg2.bind(this)(that);
 					else if (!that.killed) that.kill();
-				}
+				};
 				req.onerror = function() {
 					var index = that.reqAry.indexOf(this);
 					that.port.postMessage({
@@ -54,7 +54,7 @@
 						link: that.linkAry[index]
 					});
 					that.checkDone();
-				}
+				};
 				req.onabort = function() {
 					var index = that.reqAry.indexOf(this);
 					that.port.postMessage({
@@ -64,13 +64,13 @@
 						link: that.linkAry[index]
 					});
 					that.checkDone();
-				}
+				};
 				req.sendWithTimeout(20000);
 			}
 		},
 		processMsg2: function(that) {
 			var index = that.reqAry.indexOf(this);
-			var titleLink
+			var titleLink;
 			if (that.type == "imdb") {
 				var table = $(document.createElement("table"));
 				table.html(this.responseText.match(pattern));
@@ -80,7 +80,7 @@
 				body.html(this.responseText.match(pattern3));
 				titleLink = body.find(".results > ul").find('a:first').attr("href");
 			}
-			if (titleLink != undefined) {
+			if (titleLink !== undefined) {
 				var req2 = new XMLHttpRequest();
 				that.reqAry2[index] = req2;
 				if (that.type == "imdb") that.linkAry[index] = "http://www.imdb.com" + titleLink;
@@ -92,12 +92,12 @@
 						var ratingAry, rating = "N/A";
 						if (that.type == "imdb") {
 							ratingAry = this.responseText.match(pattern2);
-							if (ratingAry != null) rating = ratingAry[1];
+							if (ratingAry !== null) rating = ratingAry[1];
 							ratingAry = this.responseText.match(pattern5);
-							if (ratingAry != null) rating = rating + ", " + ratingAry[1];
+							if (ratingAry !== null) rating = rating + ", " + ratingAry[1];
 						} else {
 							ratingAry = this.responseText.match(pattern4);
-							if (ratingAry != null) rating = ratingAry[0].match(/\d{2,3}/)[0];
+							if (ratingAry !== null) rating = ratingAry[0].match(/\d{2,3}/)[0];
 						}
 						that.port.postMessage({
 							type: that.type,
@@ -107,7 +107,7 @@
 						});
 						that.checkDone();
 					} else if (!that.killed) that.kill();
-				}
+				};
 				req2.onerror = function() {
 					var index2 = that.reqAry2.indexOf(this);
 					that.port.postMessage({
@@ -117,7 +117,7 @@
 						link: that.linkAry[index2]
 					});
 					that.checkDone();
-				}
+				};
 				req2.onabort = function() {
 					var index2 = that.reqAry.indexOf(this);
 					that.port.postMessage({
@@ -127,7 +127,7 @@
 						link: that.linkAry[index2]
 					});
 					that.checkDone();
-				}
+				};
 				req2.sendWithTimeout(20000);
 			} else {
 				that.port.postMessage({
@@ -150,22 +150,22 @@
 			index = processAry.indexOf(that);
 			if (index >= 0) processAry.splice(index, 1);
 			delete that.port;
-			if (that.reqAry != undefined) {
+			if (that.reqAry !== undefined) {
 				ary = that.reqAry;
 				len = ary.length;
 				for (i = 0; i < len; i++) {
-					if (ary[i] != null) {
+					if (ary[i] !== null) {
 						ary[i].onabort = null;
 						ary[i].abort();
 					}
 				}
 				delete that.reqAry;
 			}
-			if (that.reqAry2 != undefined) {
+			if (that.reqAry2 !== undefined) {
 				ary = that.reqAry2;
 				len = ary.length;
 				for (i = 0; i < len; i++) {
-					if (ary[i] != null) {
+					if (ary[i] !== null) {
 						ary[i].onabort = null;
 						ary[i].abort();
 					}
@@ -175,24 +175,24 @@
 			delete that.linkAry;
 			delete that.total;
 			delete that.done;
-			if (processAry.length == 0) {
+			if (processAry.length === 0) {
 				setBadge("");
 				setTitle("");
 			}
 			that.killed = true;
 		}
-	}
+	};
 
 	function setBadge(s) {
 		chrome.browserAction.setBadgeText({
 			text: s
-		})
+		});
 	}
 
 	function setTitle(s) {
 		chrome.browserAction.setTitle({
 			title: s
-		})
+		});
 	}
 
 	chrome.extension.onConnect.addListener(function(port) {
@@ -213,7 +213,7 @@
 		});
 		port.onDisconnect.addListener(function() {
 			port.connected = false;
-			if (port.prc != undefined) port.prc.kill();
+			if (port.prc !== undefined) port.prc.kill();
 			//if (port.prc2 != undefined) port.prc2.kill();
 		});
 	});
